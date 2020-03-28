@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'Lab5.apps.Lab5Config',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
