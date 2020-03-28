@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from enum import Enum
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Roles(Enum):
@@ -25,6 +26,12 @@ def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+def create_user_profile(sender, instance, created, **kwargs):
+    try:
+        instance.profile.save()
+    except ObjectDoesNotExist:
+        Profile.objects.create(user=instance)
 
 class Params(models.Model):
 	isPeriodicChange = models.BooleanField(default=False)
