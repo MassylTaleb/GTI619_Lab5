@@ -16,8 +16,8 @@ class Roles(Enum):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email_confirmed = models.BooleanField(default=False)
-    role = models.CharField(max_length=5, choices=[(tag.value, tag.value) for tag in Roles])
+    isEmailConfirmed = models.BooleanField(default=False)
+    role = models.CharField(max_length=37, choices=[(tag.value, tag.value) for tag in Roles])
 
 
 @receiver(post_save, sender=User)
@@ -30,11 +30,11 @@ class Params(models.Model):
 	isPeriodicChange = models.BooleanField(default=False)
 	passMinLength = models.PositiveIntegerField(default=8)
 	passMaxLength = models.PositiveIntegerField(blank=True, null=True)
-	mustHaveUppercase = models.BooleanField(default=False)
-	mustHaveLowercase = models.BooleanField(default=False)
-	mustHaveSpecialChar = models.BooleanField(default=False)
-	mustHaveNumericChar = models.BooleanField(default=False)
+	needUppercase = models.BooleanField(default=False)
+	needLowercase = models.BooleanField(default=False)
+	needSpecialChar = models.BooleanField(default=False)
+	needNumericChar = models.BooleanField(default=False)
 	cannotUsePreviousPass = models.BooleanField(default=False)
-	maxNumberAttemps = models.PositiveIntegerField(default=3)
+	numberOfAttemps = models.PositiveIntegerField(default=3)
 	delayBetweenAttemps = models.PositiveIntegerField(default=1)
 	contactAdminAfterFailure = models.BooleanField(default=False)
