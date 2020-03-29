@@ -11,5 +11,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page = 'login'), name='logout'),
     path('signup/', views.signup, name='signup'),
     path('params/', views.params, name='params'),
-
+    path('allCR/', views.getAllCR, name='allCR'),
+    path('allCA/', views.getAllCA, name='allCA'),
 ]
