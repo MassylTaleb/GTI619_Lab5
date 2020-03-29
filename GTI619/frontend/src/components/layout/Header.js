@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 export class Header extends Component {
     render() {
         return (
-            <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand">Navbar</a>
-            </nav>
+            <div className="text-center">
+                <h1>App with React + Django</h1>
+            </div>
         )
     }
 }
