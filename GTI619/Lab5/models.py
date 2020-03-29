@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from enum import Enum
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 
 
 class Roles(Enum):
@@ -45,3 +46,4 @@ class Params(models.Model):
 	numberOfAttemps = models.PositiveIntegerField(default=3)
 	delayBetweenAttemps = models.PositiveIntegerField(default=1)
 	contactAdminAfterFailure = models.BooleanField(default=False)
+
