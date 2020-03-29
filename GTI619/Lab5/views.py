@@ -50,3 +50,26 @@ def params(request):
     else:
         form = ParamsForm()
     return render(request, 'params.html', {'form': form})
+
+@login_required
+def getAllCR(request):
+    currentUser = request.user.id
+    currentProfile = Profile.objects.get(user_id = currentUser)
+    print(currentProfile.role)
+    if currentProfile.role != 'CA':
+        cr_list = User.objects.filter(profile__role='CR')
+        return render(request, 'allCR.html', {'cr_user_list': cr_list})
+    else:
+        return render(request, 'notAllowed.html')
+
+
+
+@login_required
+def getAllCA(request):
+    currentUser = request.user.id
+    currentProfile = Profile.objects.get(user_id=currentUser)
+    if currentProfile.role != 'CR':
+        ca_list = User.objects.filter(profile__role='CA')
+        return render(request, 'allCA.html', {'ca_user_list': ca_list})
+    else:
+        return render(request, 'notAllowed.html')
