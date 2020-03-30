@@ -1,16 +1,21 @@
 import React, {Component, Fragment} from "react";
-import { render } from "react-dom"
 
 import Header from "./layout/Header";
 import Home from "./Home";
 
+import { Provider } from 'react-redux';
+import store from '../store'
+import Login from "./Login";
+
 class App extends Component {
     render() {
         return (
-            <Fragment>
-                <Header />
-                <Home />
-            </Fragment>
+            <Provider store={store}>
+                <Fragment>
+                    <Header />
+                    <Login />
+                </Fragment>
+            </Provider>
         )
     }
 }

@@ -1,27 +1,17 @@
-import React, { Component } from 'react';
-import { Col, Container, Row } from "reactstrap"
-import {API_URL} from "../constants/Api-const";
-
-import axios from "axios"
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getUsers } from "../actions/users";
 
 export class Home extends Component {
 
-    // state = {
-    //     user: []
-    // };
-    //
-    // componentDidMount() {
-    //     this.resetState();
-    // }
-    //
-    // getUser = () => {
-    //     axios.get(API_URL).then(response =>
-    //         this.setState({ users: response.data }));
-    // };
-    //
-    // resetState = () => {
-    //     this.getUser()
-    // };
+    static propTypes = {
+        users: PropTypes.array.isRequired
+    };
+
+    componentDidMount() {
+        this.props.getUsers();
+    }
 
     render() {
         return (
@@ -33,4 +23,8 @@ export class Home extends Component {
     }
 }
 
-export default Home
+const mapStateToProps = state => ({
+    users: state.users.users
+});
+
+export default connect(mapStateToProps, { getUsers })(Home);
