@@ -23,6 +23,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
+
             return redirect('home')
     else:
         form = SignUpForm()
@@ -44,12 +45,17 @@ def activate_token(request, uuid, token):
 
 @login_required
 def params(request):
-    if request.method == 'POST':
-        form = ParamsForm(request.POST)
+    if request.user.username == 'admin':
+        if request.method == 'POST':
+            form = ParamsForm(request.POST)
+            if form.is_valid():
+                form.save()
 
+        else:
+            form = ParamsForm()
+        return render(request, 'params.html', {'form': form})
     else:
-        form = ParamsForm()
-    return render(request, 'params.html', {'form': form})
+        return render(request, 'notAllowed.html')
 
 @login_required
 def getAllCR(request):

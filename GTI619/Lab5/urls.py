@@ -3,14 +3,10 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from . import views
+from rest_framework import routers
+from .api import *
+router = routers.DefaultRouter()
+router.register('api/params', ParamsViewSet, 'params')
+router.register('api/profile', ProfileViewSet, 'profile')
 
-
-urlpatterns = [
-    path('', views.home, name='home'),
-    path('login/', LoginView.as_view(template_name = 'login.html'), name='login'),
-    path('logout/', LogoutView.as_view(next_page = 'login'), name='logout'),
-    path('signup/', views.signup, name='signup'),
-    path('params/', views.params, name='params'),
-    path('allCR/', views.getAllCR, name='allCR'),
-    path('allCA/', views.getAllCA, name='allCA'),
-]
+urlpatterns = router.urls
