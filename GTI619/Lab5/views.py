@@ -73,3 +73,15 @@ def getAllCA(request):
         return render(request, 'allCA.html', {'ca_user_list': ca_list})
     else:
         return render(request, 'notAllowed.html')
+
+
+@login_required
+def gridcard(request):
+    if request.method == 'POST':
+        form = GridCardForm(request.POST)
+        if form.is_valid():
+            # TODO : validate grid card here
+            return redirect('home')
+    else:
+        form = GridCardForm()
+    return render(request, 'gridcard.html', {'form': form})

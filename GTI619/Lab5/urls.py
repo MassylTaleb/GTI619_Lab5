@@ -13,4 +13,5 @@ urlpatterns = [
     path('params/', views.params, name='params'),
     path('allCR/', views.getAllCR, name='allCR'),
     path('allCA/', views.getAllCA, name='allCA'),
+    path('gridcard/', views.gridcard, name='gridcard'),
 ]
