@@ -51,19 +51,20 @@ def log_in(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        print("authenticated user : ", user)
         if user is not None:
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
             print(current_site)
             subject = 'Activate Your MySite Account'
-            gc = generateGridCard(gridCardRow, gridCardCol)
+            card = generateGridCard(gridCardRow, gridCardCol)
             htmlmessage = render_to_string('account_activation_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
-                'gridcard': gc,
+                'gridcard': card,
                 'gridRowRangeMinusOne': range(1, gridCardRow),
                 'gridColRange': range(gridCardCol)
             })
@@ -80,8 +81,22 @@ def log_in(request):
             print(result)
 
             # TODO : save card with userid
+
+            combi = 3
+            cols = random.sample(range(1, gridCardCol+1), combi)
+            rows = random.sample(range(1, gridCardRow+1), combi)
+            responses = {card[0][cols[0]] + card[rows[0]][0] : card[rows[0]][cols[0]]}
+            for i in range(1, combi):
+                responses[card[0][cols[i]] + card[rows[i]][0]] = card[rows[i]][cols[i]]
+
+            print("responses", responses)
+            iterResponses = iter(responses)
+            key1 = next(iterResponses)
+            key2 = next(iterResponses)
+            key3 = next(iterResponses)
             
-            return redirect('gridcard')
+            return render(request, 'gridcard.html', {'key1': key1, 'key2': key2, 'key3': key3})
+            # return redirect('gridcard')
             # return render(request, 'confirmation_email.html')
         else:
             messages.info(request, f'account done not exit plz sign in')
@@ -187,13 +202,17 @@ def generateGridCard(row, col):
 
 def gridcard(request):
     currentUser = request.user
+    print("request /gridcard : ", request)
+    print("request method /gridcard : ", request.method)
     print(currentUser)
     if request.method == 'POST':
         form = GridCardForm(request.POST)
+        print(form)
         if form.is_valid():
             # TODO : validate grid card here
-            print(form)
             return redirect('home')
+        print("form not valid?", form)
+        return redirect('home')
     else:
         # TODO : get users grid card
         card = generateGridCard(gridCardRow, gridCardCol)
@@ -206,9 +225,10 @@ def gridcard(request):
             responses[card[0][cols[i]] + card[rows[i]][0]] = card[rows[i]][cols[i]]
 
         print("responses", responses)
-        key1 = next(iter(responses))
-        key2 = next(iter(responses))
-        key3 = next(iter(responses))
+        iterResponses = iter(responses)
+        key1 = next(iterResponses)
+        key2 = next(iterResponses)
+        key3 = next(iterResponses)
 
         form = GridCardForm()
         
