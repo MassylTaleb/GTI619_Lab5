@@ -71,7 +71,7 @@ def log_in(request):
             user.email_user(subject, message)
             user_email = user.email
             recipients = [user_email]
-            print(user_email)
+            print(message)
             result = send_mail(
                 subject,message,
                 'Dont Reply <do_not_reply@domain.com>',

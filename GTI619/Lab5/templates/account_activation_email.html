@@ -1,11 +1,4 @@
 {% autoescape off %}
-
-<style>
-    table, th, td { 
-        border: 1px solid black;
-    }
-</style>
-
 Hi {{ user.username }},
 
 Here is your grid card. Please validate your authentication with this card here : http://{{ domain }}{% url 'gridcard' %}
