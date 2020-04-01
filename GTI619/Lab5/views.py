@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.models import User
+import string
+import random
 
 
 
@@ -77,11 +79,57 @@ def getAllCA(request):
 
 @login_required
 def gridcard(request):
+    currentUserId = request.user.id
     if request.method == 'POST':
         form = GridCardForm(request.POST)
         if form.is_valid():
             # TODO : validate grid card here
+            print(form)
             return redirect('home')
     else:
+
+        def generateGridCard(row, col):
+            # add 1 for row header and column header
+            row += 1 
+            col += 1
+            columnHeader = random.sample(range(1, col+1), col)
+            columnHeader = list(map(str, columnHeader)) # convert int array to str array
+            columnHeader[0] = ' ' #first top left cell is empty
+            rowHeader = random.sample(string.ascii_uppercase[:row], col)
+            possibilities = (row -1) * (col -1)
+            arrRandomAlpha = random.sample(string.ascii_uppercase[:26], 26) if possibilities <= 26 else random.choices(string.ascii_uppercase[:26], k=possibilities)
+
+            card = [[' ' for x in range(col)] for y in range(row)]
+            card[0] = columnHeader
+            randomAlphaIndex = 0
+            for rowIndex in range(1, row):
+                card[rowIndex][0] = rowHeader[rowIndex]
+                for colIndex in range(1, col):
+                    card[rowIndex][colIndex] = arrRandomAlpha[randomAlphaIndex]
+                    randomAlphaIndex += 1
+            
+            # print gridcard
+            for x in range(row):
+                print(card[x])
+
+            return card
+
+        col = 5
+        row = 5
+        # TODO : check if user already has its gridcard
+        card = generateGridCard(row, col) # 5x5 is suggested
+        # TODO : send gridcard via email
+
+        combi = 3
+        cols = random.sample(range(1, col+1), combi)
+        rows = random.sample(range(1, row+1), combi)
+        response = {card[0][cols[0]] + card[rows[0]][0] : card[rows[0]][cols[0]]}
+        for i in range(1, combi):
+            response[card[0][cols[i]] + card[rows[i]][0]] = card[rows[i]][cols[i]]
+
+        print("response", response)
+
         form = GridCardForm()
+        print(form)
+        
     return render(request, 'gridcard.html', {'form': form})

@@ -124,5 +124,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_URL = '/Lab5/login/'
 
 LOGIN_REDIRECT_URL = '/Lab5/gridcard/'

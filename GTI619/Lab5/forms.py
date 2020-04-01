@@ -82,12 +82,7 @@ class ParamsForm(ModelForm):
                   'delayBetweenAttemps': 'Delay between attemps (in minutes)',
                   'contactAdminAfterFailure': 'User must contact admin on failure'}
 
-class GridCardForm(forms.Form):
-    alphaNumValidator = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only an alphanumeric character is allowed.')
-    forms.CharField(label='Value1', max_length=1, min_length=1)
-    forms.CharField(label='Value2', max_length=1, min_length=1)
-    forms.CharField(label='Value3', max_length=1, min_length=1)
-
+class GridCardForm(ModelForm):
     class Meta:
-        model = User
-        fields = ('Value1', 'Value2', 'Value3')
+        model = GridCard
+        fields = ['value1', 'value2', 'value3']
