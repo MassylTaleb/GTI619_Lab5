@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Please specify the value associated to your grid card</h1>
+    {{ responses }}
+    <form method="post" action="/Lab5/gridcard/">
+      {% csrf_token %}
+      <label for="value1">{{ key1 }} : </label>
+      <input type="text" name="value1" >
+      <label for="value1">{{ key2 }} : </label>
+      <input type="text" name="value1" >
+      <label for="value1">{{ key3 }} : </label>
+      <input type="text" name="value1" >
+      <button type="submit">Validate</button>
+    </form>
+{% endblock %}

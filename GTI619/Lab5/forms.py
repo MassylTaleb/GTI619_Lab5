@@ -83,3 +83,7 @@ class ParamsForm(ModelForm):
                   'delayBetweenAttemps': 'Delay between attemps (in minutes)',
                   'contactAdminAfterFailure': 'User must contact admin on failure'}
 
+class GridCardForm(ModelForm):
+    class Meta:
+        model = GridCard
+        fields = ['value1', 'value2', 'value3']

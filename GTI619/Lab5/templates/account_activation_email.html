@@ -1,7 +1,28 @@
 {% autoescape off %}
 Hi {{ user.username }},
 
-Please click on the link below to confirm your registration:
+Here is your grid card. Please validate your authentication with this card here : http://{{ domain }}{% url 'gridcard' %}
+<br />
+<table style="border: 1px solid black; border-collapse: collapse;">
+    <tr style="border: 1px solid black; background-color: lightgray;">
+        {% for colValue in gridcard.0 %}
+            <th style="border: 1px solid black; text-align: center;padding: 15px;">{{ colValue }}</th>
+        {% endfor %}
+    </tr>
+    
+    {% for row in gridcard|slice:"1:" %}
+        <tr style="border: 1px solid black; width: 30px;">
+            {% for cell in row %}
+                {% if forloop.first %}
+                    <td style="border: 1px solid black; text-align: center;padding: 15px; background-color: gray;"><b>{{ cell }}</b></td>
+                {% else %}
+                    <td style="border: 1px solid black; text-align: center;padding: 15px;">{{ cell }}</td>
+                {% endif %}
+                    </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 {% endautoescape %}
