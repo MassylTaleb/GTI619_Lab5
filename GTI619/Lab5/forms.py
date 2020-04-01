@@ -9,12 +9,13 @@ from django.core.validators import RegexValidator
 
 class SignUpForm(forms.Form):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
-    passMaxLength = Params.objects.values('passMaxLength').first().popitem()[1]
-    passMinLength = Params.objects.values('passMinLength').first().popitem()[1]
-    needUppercase = Params.objects.values('needUppercase').first().popitem()[1]
-    needLowercase = Params.objects.values('needLowercase').first().popitem()[1]
-    needSpecialChar = Params.objects.values('needSpecialChar').first().popitem()[1]
-    needNumericChar = Params.objects.values('needNumericChar').first().popitem()[1]
+    passMaxLength = Params.objects.values('passMaxLength').last().popitem()[1]
+    passMinLength = Params.objects.values('passMinLength').last().popitem()[1]
+    print(passMinLength)
+    needUppercase = Params.objects.values('needUppercase').last().popitem()[1]
+    needLowercase = Params.objects.values('needLowercase').last().popitem()[1]
+    needSpecialChar = Params.objects.values('needSpecialChar').last().popitem()[1]
+    needNumericChar = Params.objects.values('needNumericChar').last().popitem()[1]
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
     if not needSpecialChar:
         password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric])
