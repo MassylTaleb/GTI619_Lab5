@@ -2,21 +2,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container text-center">
     <h1>Please specify the value associated to your grid card</h1>
+    <br />
     {{ responses }}
-    <form method="post" action="/Lab5/gridcard/">
-      {% csrf_token %}
-      <label for="value1">{{ key1 }} : </label>
-      <input type="text" name="value1" >
-      <label for="value2">{{ key2 }} : </label>
-      <input type="text" name="value2" >
-      <label for="value3">{{ key3 }} : </label>
-      <input type="text" name="value3" >
+    <div class="row justify-content-center">
+        <form method="post" action="/Lab5/gridcard/">
+          {% csrf_token %}
+          <label for="value1">{{ key1 }} : </label>
+          <input type="text" name="value1" >
+          <label for="value2">{{ key2 }} : </label>
+          <input type="text" name="value2" >
+          <label for="value3">{{ key3 }} : </label>
+          <input type="text" name="value3" >
 
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-      <input type="hidden" name="userId" value='{{userId}}'>
-      <button type="submit">Validate</button>
-    </form>
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+          <input type="hidden" name="userId" value='{{userId}}'>
+            <br />
+            <br />
+          <button type="submit">Validate</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

@@ -18,6 +18,7 @@ class SignUpForm(forms.Form):
     needSpecialChar = Params.objects.values('needSpecialChar').last().popitem()[1]
     needNumericChar = Params.objects.values('needNumericChar').last().popitem()[1]
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
+    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     if not needSpecialChar:
         password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget= forms.PasswordInput)
         password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget= forms.PasswordInput)
@@ -25,7 +26,6 @@ class SignUpForm(forms.Form):
         password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, widget= forms.PasswordInput)
         password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, widget= forms.PasswordInput)
 
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     role = forms.ChoiceField(choices=[(tag.value, tag.value) for tag in Roles], label='Role', initial=Roles.ADMIN,
                              widget=forms.Select(), required=True)
 
