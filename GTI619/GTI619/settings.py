@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'frontend',
-    'rest_framework'
+    'axes'
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -62,11 +62,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware'
 ]
 
 SESSION_EXPIRE_SECONDS = 1200
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
-
+AXES_FAILURE_LIMIT = 4
+AXES_COOLOFF_TIME = 1
+AXES_ONLY_USER_FAILURES = True
+AXES_ENABLE_ADMIN = True
 
 ROOT_URLCONF = 'GTI619.urls'
 
@@ -88,6 +92,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GTI619.wsgi.application'
 
+AUTHENTICATION_BACKENDS = [
+
+    'axes.backends.AxesBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
