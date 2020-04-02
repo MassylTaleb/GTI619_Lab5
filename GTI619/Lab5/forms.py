@@ -83,7 +83,21 @@ class ParamsForm(ModelForm):
                   'delayBetweenAttemps': 'Delay between attemps (in minutes)',
                   'contactAdminAfterFailure': 'User must contact admin on failure'}
 
-class GridCardForm(ModelForm):
+class GridCardForm(forms.Form):
+
+    value1 =  models.CharField(max_length=1)
+    value2 =  models.CharField(max_length=1)
+    value3 =  models.CharField(max_length=1)
+    
+    def cleanGridcardForm(self):
+        cleaned_data = super(GridCardForm, self).clean()
+        v1 = cleaned_data.get('value1')
+        v2 = cleaned_data.get('value2')
+        v3 = cleaned_data.get('value3')
+        if not v1 or not v2 or not v3:
+            raise forms.ValidationError('Please enter all 3 values')
+
     class Meta:
         model = GridCard
-        fields = ['value1', 'value2', 'value3']
+        fields = ['userId', 'value1', 'value2', 'value3']
+        

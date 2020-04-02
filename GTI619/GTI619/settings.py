@@ -45,7 +45,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'gti619eq09@gmail.com'
-DEFAULT_FROM_EMAIL = 'Dont Reply <do_not_reply@domain.com>'
+DEFAULT_FROM_EMAIL = 'Do Not Reply <do_not_reply@domain.com>'
 EMAIL_HOST_PASSWORD = 'gti619newteam'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
