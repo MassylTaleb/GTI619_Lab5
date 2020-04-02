@@ -54,6 +54,8 @@ def log_in(request):
         print("authenticated user : ", user)
         if user is not None:
             user.is_active = False
+            card, created = GridCard.objects.get_or_create(user=user)
+            user.gridcard = card
             user.save()
             current_site = get_current_site(request)
             print(current_site)
@@ -74,15 +76,6 @@ def log_in(request):
             user_email = user.email
             recipients = [user_email]
 
-            print("In case you messed up and user cannot log in : ")
-            print("http://"+current_site.domain+"/Lab5/activate/"+ uid + "/" + activateToken)
-            result = send_mail(
-                subject,message,
-                'Do Not Reply <do_not_reply@domain.com>',
-                recipients,
-                html_message=htmlmessage)
-            print(result)
-
             combi = 3
             cols = random.sample(range(1, gridCardCol+1), combi)
             rows = random.sample(range(1, gridCardRow+1), combi)
@@ -101,7 +94,9 @@ def log_in(request):
             val3 = next(iterResponseValues)
 
             # save responses in db
-            new_gc = GridCard.objects.get(user_id = user.id)
+            new_gc = GridCard.objects.get(
+                user_id = user.id
+            )
             new_gc.key1 = key1
             new_gc.key2 = key2
             new_gc.key3 = key3
@@ -112,7 +107,16 @@ def log_in(request):
             gcSaved = new_gc.save()
             print("gridcard saved in db? : ", gcSaved)
             user.gridcard = new_gc
-            user.save()
+            user.gridcard.save()
+
+            print("In case you messed up and user cannot log in : ")
+            print("http://"+current_site.domain+"/Lab5/activate/"+ uid + "/" + activateToken)
+            result = send_mail(
+                subject,message,
+                'Do Not Reply <do_not_reply@domain.com>',
+                recipients,
+                html_message=htmlmessage)
+            print(result)
             
             return render(request, 'gridcard.html', {'userId': uid, 'key1': key1, 'key2': key2, 'key3': key3})
             # return redirect('gridcard')
@@ -122,6 +126,8 @@ def log_in(request):
             print("try again", user)
             if user is not None:
                 user.is_active = True
+                card, created = GridCard.objects.get_or_create(user=user)
+                user.gridcard = card
                 user.save()
             messages.info(request, f'account done not exit plz sign in')
             return redirect('logout')
@@ -133,6 +139,9 @@ def log_in(request):
 
 
 def signup(request):
+    users = User.objects.all()
+    for user in users:
+        print(user.username)
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
