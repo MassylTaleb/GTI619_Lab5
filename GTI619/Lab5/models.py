@@ -47,3 +47,7 @@ class Params(models.Model):
 	delayBetweenAttemps = models.PositiveIntegerField(default=1)
 	contactAdminAfterFailure = models.BooleanField(default=False)
 
+class GridCard(models.Model):
+    value1 =  models.CharField(max_length=1)
+    value2 =  models.CharField(max_length=1)
+    value3 =  models.CharField(max_length=1)
