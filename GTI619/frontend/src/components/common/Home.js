@@ -14,10 +14,31 @@ export class Home extends Component {
 
     render() {
         return (
-            <div className="text-center">
-                <h2>Welcome</h2>
-                <p>Your email address</p>
-            </div>
+            <Fragment>
+                <h2>Users</h2>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { this.props.users.map(user => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.username}</td>
+                                <td>{user.email}</td>
+                                <td>{user.role}</td>
+                                <td><button className="btn btn-danger btn-sm">
+                                    Delete</button></td>
+                            </tr>
+                        )) }
+                    </tbody>
+                </table>
+            </Fragment>
         )
     }
 }

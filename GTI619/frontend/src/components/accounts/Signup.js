@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { addUser } from "../../actions/users";
+import {Link} from "react-router-dom";
 
 export class Signup extends Component {
 
@@ -28,7 +29,7 @@ export class Signup extends Component {
     };
 
     render() {
-        const { username, email, password1, password2 } = this.state;
+        const { username, email, password1, password2, role } = this.state;
         return (
             <div className="text-center">
                 <br />
@@ -47,27 +48,29 @@ export class Signup extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputPassword1">Enter Password</label>
-                            <input type="password" className="form-control" name="password1" onChange={this.onChange}
+                            <input type="password" autoComplete="off" className="form-control" name="password1" onChange={this.onChange}
                                    id="inputPassword1" value={password1} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="inputPassword2">Confirm Password</label>
-                            <input type="password" className="form-control" name="password2" onChange={this.onChange}
+                            <input type="password" autoComplete="off" className="form-control" name="password2" onChange={this.onChange}
                                    id="inputPassword2" value={password2} />
                         </div>
-                        <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown
-                            </button>
-                            <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <button className="dropdown-item" type="button">Administrateur</button>
-                                <button className="dropdown-item" type="button">Proposé aux clients résidentiels</button>
-                                <button className="dropdown-item" type="button">Proposé aux clients clients d'affaire</button>
+                        <br />
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <label className="input-group-text" htmlFor="inputRoleSelect">Role</label>
                             </div>
+                            <select className="custom-select" name="role" onChange={this.onChange}
+                                    id="inputGroupSelect01" value={role}>
+                                <option value="CR">Proposé aux clients résidentiels</option>
+                                <option value="CA">Proposé aux clients clients d'affaire</option>
+                                <option value="ADMIN">Administrateur</option>
+                            </select>
                         </div>
                         <br />
-                        <button type="submit" className="btn btn-primary">Sign Up</button>
+                        <button type="submit" className="btn btn-primary"><Link to="/home">
+                            Sign Up</Link></button>
                     </form>
                 </div>
             </div>
