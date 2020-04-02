@@ -139,22 +139,23 @@ def log_in(request):
 
 
 def signup(request):
-    users = User.objects.all()
-    for user in users:
-        print(user.username)
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
+    if request.user.username == 'admin':
+        users = User.objects.all()
+        if request.method == 'POST':
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
 
-            return redirect('home')
+                return redirect('home')
+        else:
+            form = SignUpForm()
+        return render(request, 'signup.html', {'form': form})
     else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+        return render(request, 'notAllowed.html')
 
 def activate_token(request, uuid, token):
     try:
