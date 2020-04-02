@@ -48,6 +48,23 @@ class Params(models.Model):
 	contactAdminAfterFailure = models.BooleanField(default=False)
 
 class GridCard(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    key1 =  models.CharField(max_length=2)
+    key2 =  models.CharField(max_length=2)
+    key3 =  models.CharField(max_length=2)
     value1 =  models.CharField(max_length=1)
     value2 =  models.CharField(max_length=1)
     value3 =  models.CharField(max_length=1)
+    active = models.BooleanField(default=False)
+
+@receiver(post_save, sender=User)
+def update_user_gridcard(sender, instance, created, **kwargs):
+    if created:
+        GridCard.objects.create(user=instance)
+    instance.gridcard.save()
+
+def create_user_gridcard(sender, instance, created, **kwargs):
+    try:
+        instance.gridcard.save()
+    except ObjectDoesNotExist:
+        GridCard.objects.create(user=instance)

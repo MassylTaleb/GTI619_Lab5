@@ -8,10 +8,15 @@
       {% csrf_token %}
       <label for="value1">{{ key1 }} : </label>
       <input type="text" name="value1" >
-      <label for="value1">{{ key2 }} : </label>
-      <input type="text" name="value1" >
-      <label for="value1">{{ key3 }} : </label>
-      <input type="text" name="value1" >
+      <label for="value2">{{ key2 }} : </label>
+      <input type="text" name="value2" >
+      <label for="value3">{{ key3 }} : </label>
+      <input type="text" name="value3" >
+
+      {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+      {% endfor %}
+      <input type="hidden" name="userId" value='{{userId}}'>
       <button type="submit">Validate</button>
     </form>
 {% endblock %}
