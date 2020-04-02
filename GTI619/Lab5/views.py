@@ -251,11 +251,14 @@ def gridcard(request):
                 user.save()
                 if value1 == response.value1 and value2 == response.value2 and value3 == response.value3:
                     print("gridcard validation success, logging user")
-                    login(request, user)
+                    login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                     return redirect('home')
                 print("gridcard validation failed, try again")
-            except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            except(TypeError, ValueError, OverflowError, User.DoesNotExist) as error:
                 user = None
+                print("error type", type(error))
+                print("error args", error.args)
+                print("error wtf", error)
                 return redirect('login')
 
             return redirect('logout')
