@@ -10,6 +10,7 @@ from django.core.validators import RegexValidator
 class SignUpForm(forms.Form):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
     passMaxLength = Params.objects.values('passMaxLength').last().popitem()[1]
+    print(passMaxLength)
     passMinLength = Params.objects.values('passMinLength').last().popitem()[1]
     print(passMinLength)
     needUppercase = Params.objects.values('needUppercase').last().popitem()[1]
@@ -19,11 +20,11 @@ class SignUpForm(forms.Form):
     username = forms.CharField(label='Enter Username', min_length=4, max_length=150)
     email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
     if not needSpecialChar:
-        password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget=forms.PasswordInput)
-        password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget=forms.PasswordInput)
+        password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget= forms.PasswordInput)
+        password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, validators=[alphanumeric], widget= forms.PasswordInput)
     else:
-        password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, widget=forms.PasswordInput)
-        password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, widget=forms.PasswordInput)
+        password1 = forms.CharField(label='Enter password', max_length=passMaxLength, min_length=passMinLength, widget= forms.PasswordInput)
+        password2 = forms.CharField(label='Confirm password', max_length=passMaxLength, min_length=passMinLength, widget= forms.PasswordInput)
 
     role = forms.ChoiceField(choices=[(tag.value, tag.value) for tag in Roles], label='Role', initial=Roles.ADMIN,
                              widget=forms.Select(), required=True)
