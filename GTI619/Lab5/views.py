@@ -177,7 +177,7 @@ def params(request):
             form = ParamsForm(request.POST)
             if form.is_valid():
                 form.save()
-
+                return render(request, 'parameters_changed.html')
         else:
             form = ParamsForm()
         return render(request, 'params.html', {'form': form})
