@@ -4,7 +4,6 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from . import views
 from .views import ActivateAccount
-from rest_framework import routers
 
 
 urlpatterns = [
