@@ -39,7 +39,7 @@ Une fois la connection avec la combinaison `username/password`, vous recevrez un
 
 ![gridcard](readmeimg/gridcard.png)
 
-Si vous n'avez pas entré une vraie adresse courriel, vous pouvez la combinaison dans le terminal : 
+Si vous n'avez pas entré une vraie adresse courriel, vous pouvez consulter la combinaison dans le terminal : 
 
 ![gridcard](readmeimg/gridterminal.png)
 
@@ -50,5 +50,5 @@ Administrateur (Admin), Préposé aux clients d'affaire (CA) et Préposé aux cl
 |-|-|-|-|
 |Admin|admin|gti619|params, CA, CR, signup|
 |Admin|< autres utilisateurs en tant qu'admin >|< son mdp >|CA, CR|
-|CA|User1|?????|CA|
-|CR|User2|?????|CR|
+|CA|User1|gti619user1|CA|
+|CR|User2|gti619user2|CR|
