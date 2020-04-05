@@ -19,42 +19,16 @@ source venv/bin/activate
 sudo apt install python3-pip
 ```
 
-### Install session wheel
+### Install required packages
 ```bash
-pip3 install wheel
-```
-
-### Install django
-```bash
-python3 -m pip install django
-```
-
-### Install django-axes
-```bash
-pip3 install django-axes
-```
-
-### Install rest framework
-```bash
-pip3 install djangorestframework
-```
-
-### Install six
-```bash
-pip3 install six
-```
-
-### Install session security
-```bash
-pip3 install django-session-security
-```
-
-### Install session timeout
-```bash
-pip3 install django-session-timeout
+$pip install -r requirements.txt
 ```
 
 ## Run
 ```bash
 python3 GTI619/manage.py runserver
 ```
+
+# Access to website
+You can login here : 
+http://localhost:8000/Lab5/login/
